@@ -1,0 +1,10 @@
+Company Name: Sigma Lithium Corporation
+
+Quarters:
+Q1-2024: 30,000 tonnes
+Q2-2024: 32,500 tonnes
+Q4-2024: 75,000 tonnes
+
+Years:
+2022: 240,000 tonnes
+2025: 270,000 tonnes

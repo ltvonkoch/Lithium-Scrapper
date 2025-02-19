@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import NoSuchElementException
 import time
 import os
 import requests
@@ -34,6 +35,12 @@ def download_latest_6k():
             return None
 
         latest_filing = filings[0]  # First row should be the latest
+        
+        try:
+            company_name = driver.find_element(By.XPATH, "//h1").text
+        except NoSuchElementException:
+            print("⚠️ Warning: Could not find company name, defaulting to URL.")
+            company_name = SIGMA_LITHIUM_URL
 
         # Find the PDF download link inside the row
         pdf_link_element = latest_filing.find_element(By.XPATH, ".//a[contains(@href, '.pdf')]")
@@ -51,7 +58,7 @@ def download_latest_6k():
             file.write(response.content)
 
         print(f"Downloaded latest 6-K to {pdf_path}")
-        return pdf_path
+        return pdf_path, company_name
 
     finally:
         driver.quit()  # Close the browser
